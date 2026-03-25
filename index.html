@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WineSearch Pro — La Revue du vin de France</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <span class="logo-icon">🍇</span>
+        <div class="logo-text">
+          <h1>WineSearch <span>Pro</span></h1>
+          <p>La Revue du vin de France · Guide des Meilleurs Vins</p>
+        </div>
+      </div>
+      <div class="header-badge">
+        <span>RVF Guide 2026</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO / SEARCH SECTION -->
+  <section class="search-section">
+    <div class="search-box-wrapper">
+      <div class="search-input-group">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="와인 이름, 도멘, 지역, 아펠라시옹으로 검색..."
+          autocomplete="off"
+        />
+        <button id="clearBtn" class="clear-btn" title="검색 초기화">✕</button>
+      </div>
+
+      <!-- STAR FILTER -->
+      <div class="star-filter-row">
+        <span class="filter-label">RVF 등급 필터</span>
+        <div class="star-filter-buttons">
+          <button class="star-btn active" data-stars="all">
+            <span class="btn-stars">★★★</span>
+            <span class="btn-label">전체</span>
+          </button>
+          <button class="star-btn" data-stars="3">
+            <span class="btn-stars gold">★★★</span>
+            <span class="btn-label">3 Stars</span>
+            <span class="btn-count" id="count3"></span>
+          </button>
+          <button class="star-btn" data-stars="2">
+            <span class="btn-stars silver">★★☆</span>
+            <span class="btn-label">2 Stars</span>
+            <span class="btn-count" id="count2"></span>
+          </button>
+          <button class="star-btn" data-stars="1">
+            <span class="btn-stars bronze">★☆☆</span>
+            <span class="btn-label">1 Star</span>
+            <span class="btn-count" id="count1"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ADDITIONAL FILTERS -->
+      <div class="extra-filters">
+        <select id="regionFilter" class="filter-select">
+          <option value="all">전체 지역</option>
+        </select>
+        <select id="typeFilter" class="filter-select">
+          <option value="all">와인 타입</option>
+          <option value="Rouge">레드 (Rouge)</option>
+          <option value="Blanc">화이트 (Blanc)</option>
+          <option value="Effervescent">스파클링 (Effervescent)</option>
+        </select>
+        <select id="sortFilter" class="filter-select">
+          <option value="stars_desc">등급 높은순</option>
+          <option value="stars_asc">등급 낮은순</option>
+          <option value="name_asc">이름 오름차순</option>
+          <option value="score_desc">평점 높은순</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS STATS -->
+  <div class="results-bar">
+    <div class="results-inner">
+      <span id="resultsCount" class="results-count">와인 로딩 중...</span>
+      <div class="view-toggle">
+        <button class="view-btn active" id="gridViewBtn" title="그리드 뷰">⊞</button>
+        <button class="view-btn" id="listViewBtn" title="리스트 뷰">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WINE CARDS GRID -->
+  <main class="main-content">
+    <div id="wineGrid" class="wine-grid">
+      <!-- Cards injected by JS -->
+    </div>
+    <div id="noResults" class="no-results hidden">
+      <span class="no-results-icon">🍾</span>
+      <h3>검색 결과가 없습니다</h3>
+      <p>다른 검색어나 필터를 시도해 보세요.</p>
+    </div>
+  </main>
+
+  <!-- WINE DETAIL MODAL -->
+  <div id="wineModal" class="modal-overlay hidden">
+    <div class="modal-container">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- CRITICS LEGEND SECTION -->
+  <section class="critics-section">
+    <div class="critics-inner">
+      <h2 class="section-title">평론가 소개</h2>
+      <div class="critics-grid" id="criticsGrid"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>
+        <strong>WineSearch Pro</strong> — 데이터 출처:
+        <a href="https://www.larvf.com" target="_blank" rel="noopener">La Revue du vin de France (RVF)</a>,
+        Wine Advocate, Wine Spectator, JamesSuckling.com, Decanter
+      </p>
+      <p class="footer-note">RVF Guide 2026 기준 · 평론가 점수는 최신 발표 기준 · 교육 및 정보 목적</p>
+    </div>
+  </footer>
+
+  <script src="data/wines.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
