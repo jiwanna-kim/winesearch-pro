@@ -767,6 +767,40 @@ const WINES_DATA = [
   }
 ];
 
+// Winery coordinates [lat, lng] — village/appellation level
+const WINE_COORDS = {
+  1:  { lat: 47.1574, lng: 4.9529, place: "Vosne-Romanée" },          // Romanée-Conti
+  2:  { lat: 47.1580, lng: 4.9525, place: "Vosne-Romanée" },          // La Tâche
+  3:  { lat: 44.9208, lng: -0.1836, place: "Pomerol" },               // Pétrus
+  4:  { lat: 45.2196, lng: -0.7408, place: "Pauillac" },              // Pichon Comtesse
+  5:  { lat: 45.0742, lng: 4.8436, place: "Tain-l'Hermitage" },       // La Chapelle
+  6:  { lat: 44.0556, lng: 4.8308, place: "Châteauneuf-du-Pape" },    // Rayas
+  7:  { lat: 47.1815, lng: 4.9686, place: "Morey-Saint-Denis" },      // Clos de Tart
+  8:  { lat: 47.2228, lng: 4.9737, place: "Gevrey-Chambertin" },      // Lavaux St-Jacques
+  9:  { lat: 47.2232, lng: 4.9740, place: "Gevrey-Chambertin" },      // Duroché Chambertin
+  10: { lat: 46.9388, lng: 4.8592, place: "Puligny-Montrachet" },     // Sauzet Montrachet
+  11: { lat: 44.8945, lng: -0.1560, place: "Saint-Émilion" },         // Beauséjour Duffau
+  12: { lat: 49.3086, lng: 3.9254, place: "Merfy, Champagne" },       // Chartogne-Taillet
+  13: { lat: 47.1820, lng: 4.9690, place: "Morey-Saint-Denis" },      // Dujac Clos de la Roche
+  14: { lat: 47.1982, lng: 4.9643, place: "Chambolle-Musigny" },      // Leroy Musigny
+  15: { lat: 44.8950, lng: -0.1570, place: "Saint-Émilion" },         // Cheval Blanc
+  16: { lat: 45.1664, lng: -0.7407, place: "Saint-Julien" },          // Léoville Las Cases
+  17: { lat: 47.0645, lng: 4.8551, place: "Pernand-Vergelesses" },    // Bonneau du Martray
+  18: { lat: 45.4795, lng: 4.7639, place: "Ampuis, Côte-Rôtie" },    // Guigal La Mouline
+  19: { lat: 46.1890, lng: 4.6960, place: "Fleurie, Beaujolais" },    // Clos de la Roilette
+  20: { lat: 47.3976, lng: 0.8246, place: "Vouvray" },                // Huet
+  21: { lat: 47.3333, lng: 2.8500, place: "Sancerre" },               // Henri Bourgeois
+  22: { lat: 47.2833, lng: 2.9500, place: "Pouilly-sur-Loire" },      // De Ladoucette
+  23: { lat: 44.0600, lng: 4.8350, place: "Châteauneuf-du-Pape" },    // Beaucastel Blanc
+  24: { lat: 44.1700, lng: 4.9833, place: "Gigondas" },               // Santa Duc
+  25: { lat: 48.1383, lng: 7.2614, place: "Kaysersberg, Alsace" },    // Weinbach
+  26: { lat: 45.0745, lng: 4.8440, place: "Tain-l'Hermitage" },       // Chapoutier L'Orée
+  27: { lat: 47.8129, lng: 3.7996, place: "Chablis" },                // Raveneau
+  28: { lat: 47.2230, lng: 4.9735, place: "Gevrey-Chambertin" },      // Rossignol-Trapet
+  29: { lat: 47.0833, lng: -1.4000, place: "Maisdon-sur-Sèvre" },     // La Pépière (Muscadet)
+  30: { lat: 43.1325, lng: 5.7539, place: "Bandol, Provence" }        // Tempier
+};
+
 // Critics information
 const CRITICS = {
   parker: {

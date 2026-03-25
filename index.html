@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 
@@ -21,11 +22,18 @@
           <p>La Revue du vin de France · Guide des Meilleurs Vins</p>
         </div>
       </div>
-      <div class="header-badge">
-        <span>RVF Guide 2026</span>
+      <div class="header-right">
+        <div class="header-badge"><span>RVF Guide 2026</span></div>
+        <nav class="main-tabs">
+          <button class="main-tab active" data-tab="search">🔍 와인 검색</button>
+          <button class="main-tab" data-tab="map">🗺️ 와이너리 지도</button>
+        </nav>
       </div>
     </div>
   </header>
+
+  <!-- ===== SEARCH TAB ===== -->
+  <div id="tab-search" class="tab-panel active">
 
   <!-- HERO / SEARCH SECTION -->
   <section class="search-section">
@@ -111,6 +119,60 @@
     </div>
   </main>
 
+  </div><!-- /tab-search -->
+
+  <!-- ===== MAP TAB ===== -->
+  <div id="tab-map" class="tab-panel hidden">
+    <div class="map-layout">
+
+      <!-- Left: filters -->
+      <aside class="map-sidebar">
+        <h3 class="map-sidebar-title">필터</h3>
+        <div class="map-filter-group">
+          <label class="map-filter-label">RVF 등급</label>
+          <div class="map-star-btns">
+            <button class="map-star-btn active" data-mstars="all">전체</button>
+            <button class="map-star-btn" data-mstars="3">★★★</button>
+            <button class="map-star-btn" data-mstars="2">★★</button>
+            <button class="map-star-btn" data-mstars="1">★</button>
+          </div>
+        </div>
+        <div class="map-filter-group">
+          <label class="map-filter-label">와인 타입</label>
+          <select id="mapTypeFilter" class="map-select">
+            <option value="all">전체</option>
+            <option value="Rouge">레드</option>
+            <option value="Blanc">화이트</option>
+            <option value="Effervescent">스파클링</option>
+          </select>
+        </div>
+        <div class="map-filter-group">
+          <label class="map-filter-label">지역</label>
+          <select id="mapRegionFilter" class="map-select">
+            <option value="all">전체 지역</option>
+          </select>
+        </div>
+        <div class="map-legend">
+          <h4 class="map-legend-title">범례</h4>
+          <div class="legend-item"><span class="legend-dot dot-3"></span>3 Stars</div>
+          <div class="legend-item"><span class="legend-dot dot-2"></span>2 Stars</div>
+          <div class="legend-item"><span class="legend-dot dot-1"></span>1 Star</div>
+          <hr class="legend-hr"/>
+          <div class="legend-item"><span class="legend-dot dot-rouge"></span>레드 (Rouge)</div>
+          <div class="legend-item"><span class="legend-dot dot-blanc"></span>화이트 (Blanc)</div>
+          <div class="legend-item"><span class="legend-dot dot-eff"></span>스파클링</div>
+        </div>
+        <div id="mapCount" class="map-count">와이너리 30곳</div>
+      </aside>
+
+      <!-- Right: map -->
+      <div class="map-container">
+        <div id="leafletMap"></div>
+      </div>
+
+    </div>
+  </div><!-- /tab-map -->
+
   <!-- WINE DETAIL MODAL -->
   <div id="wineModal" class="modal-overlay hidden">
     <div class="modal-container">
@@ -139,7 +201,9 @@
     </div>
   </footer>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="data/wines.js"></script>
   <script src="app.js"></script>
+  <script src="map.js"></script>
 </body>
 </html>

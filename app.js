@@ -297,6 +297,9 @@
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
+  // ── OPEN MODAL FROM MAP ───────────────────────
+  document.addEventListener('_openModal', e => { openModal(e.detail); });
+
   // ── CRITICS SECTION ───────────────────────────
   function renderCritics() {
     criticsGrid.innerHTML = Object.entries(CRITICS).map(([, c]) => `
