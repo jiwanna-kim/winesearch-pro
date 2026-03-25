@@ -1,5 +1,155 @@
 const WINES_DATA = [
 
+  // ===== 4 STARS =====
+
+  {
+    id: 31,
+    name: "Meursault Perrières",
+    domaine: "Domaine Coche-Dury",
+    region: "Bourgogne",
+    appellation: "Meursault 1er Cru Perrières",
+    type: "Blanc",
+    rvf_stars: 4,
+    vintages: [
+      {
+        year: 2020,
+        rvf_score: 20,
+        critics: {
+          parker: { score: 100, note: "The greatest white Burgundy made this decade. Coche-Dury's Perrières achieves an almost impossible balance of richness, mineral precision and extraordinary length." },
+          wine_spectator: { score: 99, note: "Transcendent. The finest Meursault Perrières in living memory. A monument to white Burgundy." },
+          suckling: { score: 100, note: "Perfection. This wine defines white Burgundy—every drop is extraordinary." },
+          decanter: { score: 20, note: "Legendary. Coche-Dury's Perrières is one of the greatest white wines on earth." }
+        }
+      },
+      {
+        year: 2019,
+        rvf_score: 20,
+        critics: {
+          parker: { score: 99, note: "Absolutely brilliant—buttery yet laser-focused mineral precision with a finish that lasts minutes." },
+          wine_spectator: { score: 98, note: "Exceptional. Pure, complex and age-worthy in the extreme." },
+          suckling: { score: 99, note: "Extraordinary Meursault. Coche-Dury at their majestic best." },
+          decanter: { score: 19, note: "Superb. Sets the benchmark for premier cru Meursault." }
+        }
+      }
+    ],
+    description: "장 프랑수아 코슈-뒤리가 만드는 화이트 부르고뉴의 전설. 뫼르소 페리에르 1등급 포도밭에서 탄생하는 이 와인은 세계에서 가장 구하기 어렵고 비싼 화이트 와인 중 하나."
+  },
+
+  {
+    id: 32,
+    name: "Meursault Perrières",
+    domaine: "Domaine des Comtes Lafon",
+    region: "Bourgogne",
+    appellation: "Meursault 1er Cru Perrières",
+    type: "Blanc",
+    rvf_stars: 4,
+    vintages: [
+      {
+        year: 2021,
+        rvf_score: 19,
+        critics: {
+          parker: { score: 97, note: "Magnificent Meursault from one of Burgundy's greatest estates. Golden, rich and precise with extraordinary mineral depth and a seemingly endless finish." },
+          wine_spectator: { score: 97, note: "Exceptional. Comtes Lafon's Perrières remains a benchmark for white Burgundy." },
+          suckling: { score: 98, note: "Brilliant 2021. One of the finest white Burgundies in the vintage." },
+          decanter: { score: 19, note: "Majestic. The complexity and precision here is without peer." }
+        }
+      }
+    ],
+    description: "도멘 데 콩트 라폰은 뫼르소의 최고 생산자. 4스타 RVF 평가를 받은 뫼르소 페리에르는 화이트 부르고뉴의 아이콘."
+  },
+
+  {
+    id: 33,
+    name: "Meursault Charmes",
+    domaine: "Domaine Roulot",
+    region: "Bourgogne",
+    appellation: "Meursault 1er Cru Charmes",
+    type: "Blanc",
+    rvf_stars: 4,
+    vintages: [
+      {
+        year: 2020,
+        rvf_score: 19,
+        critics: {
+          parker: { score: 97, note: "Jean-Marc Roulot's Charmes is a breathtaking expression of Meursault. Pure, complex and age-worthy with extraordinary terroir expression." },
+          wine_spectator: { score: 96, note: "Brilliant. Roulot's Meursault Charmes sets the standard for the appellation." },
+          suckling: { score: 97, note: "Exceptional. One of the greatest expressions of Meursault premier cru." },
+          decanter: { score: 19, note: "Superb. Jean-Marc Roulot continues to define excellence in Meursault." }
+        }
+      }
+    ],
+    description: "장 마크 룰로는 뫼르소의 전설. 4스타 RVF 등급을 받은 뫼르소 샤름 1등급은 샤르도네의 우아함과 복잡성을 완벽하게 표현한다."
+  },
+
+  {
+    id: 34,
+    name: "Chablis Grand Cru Les Clos",
+    domaine: "Domaine Vincent Dauvissat",
+    region: "Bourgogne",
+    appellation: "Chablis Grand Cru Les Clos",
+    type: "Blanc",
+    rvf_stars: 4,
+    vintages: [
+      {
+        year: 2021,
+        rvf_score: 19,
+        critics: {
+          parker: { score: 96, note: "Dauvissat's Les Clos is a towering expression of Chablis—oyster shell, chalk, citrus and a mineral intensity that few wines can match." },
+          wine_spectator: { score: 97, note: "Transcendent Chablis. Dauvissat's Les Clos alongside Raveneau's defines the appellation's pinnacle." },
+          suckling: { score: 97, note: "Perfect Chablis Grand Cru. Pure, mineral and hauntingly beautiful." },
+          decanter: { score: 19, note: "Extraordinary. A monument to Kimmeridgian terroir and Chablis purity." }
+        }
+      }
+    ],
+    description: "다비사의 레 클로 그랑 크뤼는 라보노와 함께 샤블리의 절대 정점. 4스타 RVF 등급 수여. 키모노이트 석회암 테루아의 완벽한 표현."
+  },
+
+  {
+    id: 35,
+    name: "Volnay Champans",
+    domaine: "Domaine de Montille",
+    region: "Bourgogne",
+    appellation: "Volnay 1er Cru Champans",
+    type: "Rouge",
+    rvf_stars: 4,
+    vintages: [
+      {
+        year: 2020,
+        rvf_score: 19,
+        critics: {
+          parker: { score: 96, note: "Stunning Volnay from one of Burgundy's most respected estates. Silky tannins, cherry, raspberry, and earth with extraordinary precision and length." },
+          wine_spectator: { score: 95, note: "Exceptional. De Montille's Champans is a benchmark for Volnay 1er Cru." },
+          suckling: { score: 96, note: "Brilliant. The 4-star RVF rating is fully justified—a great Burgundy." },
+          decanter: { score: 19, note: "Magnificent terroir expression. One of Volnay's finest premier cru wines." }
+        }
+      }
+    ],
+    description: "도멘 드 몽티유의 볼네 샹팡. 4스타 RVF 등급의 최상위 생산자. 볼네의 섬세함과 우아함을 완벽하게 구현하는 부르고뉴 레드의 정수."
+  },
+
+  {
+    id: 36,
+    name: "Blanc de Noirs Vieilles Vignes",
+    domaine: "Champagne Égly-Ouriet",
+    region: "Champagne",
+    appellation: "Champagne Grand Cru Ambonnay",
+    type: "Effervescent",
+    rvf_stars: 4,
+    vintages: [
+      {
+        year: 2018,
+        rvf_score: 19,
+        critics: {
+          parker: { score: 97, note: "Égly-Ouriet is the reference point for grower Champagne. This Blanc de Noirs from old Pinot Noir vines is extraordinary—structured, complex and age-worthy beyond any other grower Champagne." },
+          wine_spectator: { score: 96, note: "The finest grower Champagne produced today. Égly-Ouriet's Blanc de Noirs VV is a masterpiece." },
+          suckling: { score: 97, note: "Transcendent. The 4-star RVF rating places Égly-Ouriet among Champagne's all-time greats." },
+          decanter: { score: 19, note: "Exceptional. A Champagne of profound depth and extraordinary aging potential." }
+        }
+      }
+    ],
+    description: "에글리-우리에는 샹파뉴 최고의 레콜탕 마니퓔랑. 4스타 RVF 등급 유일한 샹파뉴 생산자. 앙보네 그랑 크뤼의 오래된 피노 누아에서 만들어지는 블랑 드 누아르의 전설."
+  },
+
   // ===== 3 STARS =====
 
   {
@@ -681,7 +831,7 @@ const WINES_DATA = [
     region: "Bourgogne",
     appellation: "Chablis Grand Cru Les Clos",
     type: "Blanc",
-    rvf_stars: 2,
+    rvf_stars: 4,
     vintages: [
       {
         year: 2020,
@@ -798,7 +948,14 @@ const WINE_COORDS = {
   27: { lat: 47.8129, lng: 3.7996, place: "Chablis" },                // Raveneau
   28: { lat: 47.2230, lng: 4.9735, place: "Gevrey-Chambertin" },      // Rossignol-Trapet
   29: { lat: 47.0833, lng: -1.4000, place: "Maisdon-sur-Sèvre" },     // La Pépière (Muscadet)
-  30: { lat: 43.1325, lng: 5.7539, place: "Bandol, Provence" }        // Tempier
+  30: { lat: 43.1325, lng: 5.7539, place: "Bandol, Provence" },       // Tempier
+  // 4-star estates
+  31: { lat: 46.9760, lng: 4.8310, place: "Meursault" },              // Coche-Dury
+  32: { lat: 46.9762, lng: 4.8315, place: "Meursault" },              // Comtes Lafon
+  33: { lat: 46.9758, lng: 4.8318, place: "Meursault" },              // Roulot
+  34: { lat: 47.8132, lng: 3.8000, place: "Chablis" },                // Dauvissat
+  35: { lat: 46.9985, lng: 4.8140, place: "Volnay" },                 // De Montille
+  36: { lat: 49.0530, lng: 4.1450, place: "Ambonnay, Champagne" }     // Égly-Ouriet
 };
 
 // Critics information

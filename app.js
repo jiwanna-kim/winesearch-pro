@@ -52,7 +52,7 @@
 
   // ── STAR COUNT BADGES ─────────────────────────
   function renderCountBadges() {
-    [1, 2, 3].forEach(s => {
+    [1, 2, 3, 4].forEach(s => {
       const el = document.getElementById(`count${s}`);
       if (el) el.textContent = WINES_DATA.filter(w => w.rvf_stars === s).length;
     });
@@ -199,9 +199,9 @@
 
   function renderStarsHtml(n) {
     const filled   = '★'.repeat(n);
-    const unfilled = '☆'.repeat(3 - n);
-    const cls = n === 3 ? 'star-filled-3' : n === 2 ? 'star-filled-2' : 'star-filled-1';
-    const badgeTxt = n === 3 ? '★★★ 3 Stars' : n === 2 ? '★★ 2 Stars' : '★ 1 Star';
+    const unfilled = '☆'.repeat(Math.max(0, 4 - n));
+    const cls = n === 4 ? 'star-filled-4' : n === 3 ? 'star-filled-3' : n === 2 ? 'star-filled-2' : 'star-filled-1';
+    const badgeTxt = n === 4 ? '★★★★ 4 Stars' : n === 3 ? '★★★ 3 Stars' : n === 2 ? '★★ 2 Stars' : '★ 1 Star';
     return { stars: filled + unfilled, cls, badge: badgeTxt };
   }
 

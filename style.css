@@ -5,6 +5,8 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
+  --platinum: #7B5EA7;
+  --platinum-lt: #B09FD0;
   --gold:    #C9A84C;
   --gold-lt: #E8D08A;
   --silver:  #9B9B9B;
@@ -183,6 +185,7 @@ body {
   box-shadow: 0 4px 14px rgba(201,168,76,0.5);
 }
 .btn-stars { font-size: 0.9rem; }
+.btn-stars.platinum { color: var(--platinum-lt); }
 .btn-stars.gold   { color: var(--gold); }
 .btn-stars.silver { color: #D0D0D0; }
 .btn-stars.bronze { color: var(--bronze); }
@@ -290,6 +293,7 @@ body {
   letter-spacing: 0.5px;
   z-index: 2;
 }
+.badge-4 { background: linear-gradient(135deg, var(--platinum), var(--platinum-lt)); color: #fff; box-shadow: 0 2px 10px rgba(123,94,167,0.55); }
 .badge-3 { background: var(--gold); color: var(--deep); box-shadow: 0 2px 8px rgba(201,168,76,0.5); }
 .badge-2 { background: #9B9B9B; color: #fff; }
 .badge-1 { background: var(--bronze); color: #fff; }
@@ -373,6 +377,7 @@ body {
 }
 .rvf-label { font-size: 0.7rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 .stars-display { font-size: 1rem; letter-spacing: 1px; }
+.star-filled-4 { color: var(--platinum); }
 .star-filled-3 { color: var(--gold); }
 .star-filled-2 { color: var(--silver); }
 .star-filled-1 { color: var(--bronze); }
@@ -699,6 +704,7 @@ body {
 .map-legend-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
 .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text); margin-bottom: 6px; }
 .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; border: 2px solid rgba(0,0,0,0.15); }
+.dot-4    { background: #7B5EA7; }
 .dot-3    { background: #C9A84C; }
 .dot-2    { background: #9B9B9B; }
 .dot-1    { background: #B87333; }
@@ -718,6 +724,7 @@ body {
 .map-popup-domaine { font-size: 0.75rem; color: var(--muted); margin-bottom: 6px; }
 .map-popup-meta { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 8px; }
 .map-popup-tag { border-radius: 4px; padding: 2px 7px; font-size: 0.7rem; font-weight: 600; }
+.map-popup-stars-4 { background: #EDE8F5; color: #4A2E7A; border: 1px solid #7B5EA7; }
 .map-popup-stars-3 { background: #FFF3CD; color: #7A5C00; border: 1px solid #C9A84C; }
 .map-popup-stars-2 { background: #f0f0f0; color: #555; border: 1px solid #9B9B9B; }
 .map-popup-stars-1 { background: #FDE8D8; color: #7A3D00; border: 1px solid #B87333; }

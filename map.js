@@ -126,12 +126,12 @@
 
   // ── CUSTOM MARKER ICON ────────────────────────
   function makeIcon(wine) {
-    const starColors = { 3: '#C9A84C', 2: '#9B9B9B', 1: '#B87333' };
+    const starColors = { 4: '#7B5EA7', 3: '#C9A84C', 2: '#9B9B9B', 1: '#B87333' };
     const typeColors = { Rouge: '#6B1A2A', Blanc: '#A89030', Effervescent: '#3A8FC0' };
 
     const borderColor = starColors[wine.rvf_stars] || '#888';
     const fillColor   = typeColors[wine.type] || '#888';
-    const size = wine.rvf_stars === 3 ? 36 : wine.rvf_stars === 2 ? 30 : 24;
+    const size = wine.rvf_stars === 4 ? 44 : wine.rvf_stars === 3 ? 36 : wine.rvf_stars === 2 ? 30 : 24;
 
     const stars = '★'.repeat(wine.rvf_stars) + '☆'.repeat(3 - wine.rvf_stars);
     const fontSize = wine.rvf_stars === 3 ? 8 : 7;
@@ -170,7 +170,7 @@
 
   // ── POPUP HTML ────────────────────────────────
   function makePopupHtml(wine, coord) {
-    const starsLabel = { 3: '★★★ 3 Stars', 2: '★★ 2 Stars', 1: '★ 1 Star' };
+    const starsLabel = { 4: '★★★★ 4 Stars', 3: '★★★ 3 Stars', 2: '★★ 2 Stars', 1: '★ 1 Star' };
     const starClass  = `map-popup-stars-${wine.rvf_stars}`;
 
     const vintage = [...wine.vintages].sort((a, b) => b.year - a.year)[0];
