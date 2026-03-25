@@ -1,5 +1,5 @@
 /* ================================================
-   WineSearch Pro — App Logic
+   WineSearch Pro — App Logic (Domaine-centric)
    ================================================ */
 
 (function () {
@@ -12,7 +12,6 @@
   let currentType       = 'all';
   let currentSort       = 'stars_desc';
   let isListView        = false;
-  let activeVintages    = {}; // { wineId: vintageYear }
 
   // ── DOM REFS ───────────────────────────────────
   const searchInput  = document.getElementById('searchInput');
@@ -35,17 +34,16 @@
     buildRegionFilter();
     renderCountBadges();
     renderCritics();
-    renderWines();
+    renderDomaines();
     bindEvents();
   }
 
   // ── BUILD REGION FILTER ────────────────────────
   function buildRegionFilter() {
-    const regions = [...new Set(WINES_DATA.map(w => w.region))].sort();
+    const regions = [...new Set(DOMAINES_DATA.map(d => d.region))].sort();
     regions.forEach(r => {
       const opt = document.createElement('option');
-      opt.value = r;
-      opt.textContent = r;
+      opt.value = r; opt.textContent = r;
       regionFilter.appendChild(opt);
     });
   }
@@ -54,219 +52,214 @@
   function renderCountBadges() {
     [1, 2, 3, 4].forEach(s => {
       const el = document.getElementById(`count${s}`);
-      if (el) el.textContent = WINES_DATA.filter(w => w.rvf_stars === s).length;
+      if (el) el.textContent = DOMAINES_DATA.filter(d => d.rvf_stars === s).length;
     });
   }
 
   // ── FILTER & SORT ─────────────────────────────
-  function getFilteredWines() {
-    let wines = [...WINES_DATA];
+  function getFilteredDomaines() {
+    let list = [...DOMAINES_DATA];
 
-    // Star filter
     if (currentStarFilter !== 'all') {
-      wines = wines.filter(w => w.rvf_stars === Number(currentStarFilter));
+      list = list.filter(d => d.rvf_stars === Number(currentStarFilter));
     }
-
-    // Search
     if (currentSearch.trim()) {
       const q = currentSearch.trim().toLowerCase();
-      wines = wines.filter(w =>
-        w.name.toLowerCase().includes(q) ||
-        w.domaine.toLowerCase().includes(q) ||
-        w.region.toLowerCase().includes(q) ||
-        w.appellation.toLowerCase().includes(q)
+      list = list.filter(d =>
+        d.name.toLowerCase().includes(q) ||
+        d.region.toLowerCase().includes(q) ||
+        d.village.toLowerCase().includes(q) ||
+        d.wines.some(w =>
+          w.name.toLowerCase().includes(q) ||
+          w.appellation.toLowerCase().includes(q)
+        )
       );
     }
+    if (currentRegion !== 'all') list = list.filter(d => d.region === currentRegion);
+    if (currentType !== 'all') list = list.filter(d => d.type_tags.includes(currentType));
 
-    // Region
-    if (currentRegion !== 'all') {
-      wines = wines.filter(w => w.region === currentRegion);
-    }
-
-    // Type
-    if (currentType !== 'all') {
-      wines = wines.filter(w => w.type === currentType);
-    }
-
-    // Sort
-    wines.sort((a, b) => {
+    list.sort((a, b) => {
       switch (currentSort) {
         case 'stars_desc': return b.rvf_stars - a.rvf_stars;
         case 'stars_asc':  return a.rvf_stars - b.rvf_stars;
         case 'name_asc':   return a.name.localeCompare(b.name);
-        case 'score_desc': {
-          const aScore = getBestParkerScore(a);
-          const bScore = getBestParkerScore(b);
-          return bScore - aScore;
-        }
+        case 'score_desc': return getBestScore(b) - getBestScore(a);
         default: return 0;
       }
     });
-
-    return wines;
+    return list;
   }
 
-  function getBestParkerScore(wine) {
-    const scores = wine.vintages.map(v => v.critics.parker?.score || 0);
-    return Math.max(...scores);
+  function getBestScore(domaine) {
+    let best = 0;
+    domaine.wines.forEach(w => {
+      w.vintages.forEach(v => {
+        if (v.critics.parker?.score > best) best = v.critics.parker.score;
+      });
+    });
+    return best;
   }
 
-  function getLatestVintage(wine) {
-    const vintages = [...wine.vintages].sort((a, b) => b.year - a.year);
-    return vintages[0];
-  }
-
-  function getActiveVintage(wine) {
-    const year = activeVintages[wine.id];
-    if (year) return wine.vintages.find(v => v.year === year) || getLatestVintage(wine);
-    return getLatestVintage(wine);
-  }
-
-  // ── RENDER WINES ──────────────────────────────
-  function renderWines() {
-    const wines = getFilteredWines();
+  // ── RENDER DOMAINES ────────────────────────────
+  function renderDomaines() {
+    const list = getFilteredDomaines();
     wineGrid.innerHTML = '';
 
-    if (wines.length === 0) {
+    if (list.length === 0) {
       noResults.classList.remove('hidden');
       resultsCount.textContent = '검색 결과 없음';
       return;
     }
-
     noResults.classList.add('hidden');
-    resultsCount.textContent = `${wines.length}종 와인`;
+    resultsCount.textContent = `${list.length}개 도멘`;
 
-    wines.forEach(wine => {
-      const card = buildCard(wine);
-      wineGrid.appendChild(card);
+    list.forEach(domaine => {
+      wineGrid.appendChild(buildDomaineCard(domaine));
     });
   }
 
-  // ── BUILD CARD ────────────────────────────────
-  function buildCard(wine) {
-    const vintage = getActiveVintage(wine);
+  // ── BUILD DOMAINE CARD ────────────────────────
+  function buildDomaineCard(domaine) {
     const card = document.createElement('div');
-    card.className = 'wine-card';
-    card.dataset.id = wine.id;
+    card.className = 'wine-card domaine-card';
+    card.dataset.id = domaine.id;
 
-    const typeClass = `type-${wine.type.toLowerCase()}`;
-    const barClass  = `bar-${wine.type.toLowerCase().replace(/\s/g, '-')}`;
-    const badgeClass = `badge-${wine.rvf_stars}`;
-    const starsHtml = renderStarsHtml(wine.rvf_stars);
+    const starsHtml = renderStarsHtml(domaine.rvf_stars);
+    const badgeClass = `badge-${domaine.rvf_stars}`;
+    const typeTags = domaine.type_tags.map(t =>
+      `<span class="meta-tag type-${t.toLowerCase()}">${t}</span>`
+    ).join('');
 
-    const scores = buildScoreChips(vintage);
+    // Pick a representative image from first wine that has one
+    const heroImg = domaine.wines.find(w => w.image)?.image || null;
+
+    const scorePreview = getTopScorePreview(domaine);
 
     card.innerHTML = `
-      <div class="card-color-bar ${barClass}"></div>
       <div class="card-star-badge ${badgeClass}">${starsHtml.badge}</div>
+      ${heroImg
+        ? `<div class="card-hero-img"><img src="${heroImg}" alt="${domaine.wines[0]?.name}" loading="lazy" onerror="this.parentElement.classList.add('img-error')"/></div>`
+        : `<div class="card-hero-placeholder bar-${(domaine.type_tags[0] || 'rouge').toLowerCase().replace(/\s/g,'-')}">
+             <span class="placeholder-icon">🍷</span>
+           </div>`
+      }
       <div class="card-body">
-        <div class="card-appellation">${wine.appellation}</div>
-        <div class="card-name">${wine.name}</div>
-        <div class="card-domaine">${wine.domaine}</div>
+        <div class="card-appellation">${domaine.region} · ${domaine.village}</div>
+        <div class="card-name">${domaine.name}</div>
         <div class="card-stars-row">
           <span class="rvf-label">RVF</span>
           <span class="stars-display ${starsHtml.cls}">${starsHtml.stars}</span>
         </div>
         <div class="card-meta">
-          <span class="meta-tag">${wine.region}</span>
-          <span class="meta-tag ${typeClass}">${wine.type}</span>
-          <span class="meta-tag">빈티지 ${vintage.year}</span>
+          ${typeTags}
+          <span class="meta-tag">와인 ${domaine.wines.length}종</span>
         </div>
-        <div class="card-scores">${scores}</div>
+        <div class="card-desc-preview">${domaine.description.slice(0, 68)}…</div>
+        ${scorePreview ? `<div class="card-scores">${scorePreview}</div>` : ''}
       </div>`;
 
-    card.addEventListener('click', () => openModal(wine));
+    card.addEventListener('click', () => openModal(domaine));
     return card;
   }
 
-  function buildScoreChips(vintage) {
-    if (!vintage) return '';
-    const c = vintage.critics;
+  function getTopScorePreview(domaine) {
+    // Find the best vintage across all wines
+    let best = null;
+    domaine.wines.forEach(w => {
+      w.vintages.forEach(v => {
+        if (!best || v.critics.parker?.score > best.parker) {
+          best = { parker: v.critics.parker?.score, ws: v.critics.wine_spectator?.score, suckling: v.critics.suckling?.score, decanter: v.critics.decanter?.score, year: v.year };
+        }
+      });
+    });
+    if (!best) return '';
     return [
-      { key: 'parker', label: 'Parker', score: c.parker?.score },
-      { key: 'wine_spectator', label: 'WS', score: c.wine_spectator?.score },
-      { key: 'suckling', label: 'Suckling', score: c.suckling?.score },
-      { key: 'decanter', label: 'Decanter', score: c.decanter?.score }
+      { label: 'Parker',   score: best.parker },
+      { label: 'WS',       score: best.ws },
+      { label: 'Suckling', score: best.suckling },
+      { label: 'Decanter', score: best.decanter }
     ].map(({ label, score }) => {
       if (!score) return '';
       const cls = score >= 100 ? 'perfect' : score >= 95 ? 'excellent' : '';
-      return `<div class="score-chip">
-        <span class="score-critic">${label}</span>
-        <span class="score-value ${cls}">${score}</span>
-      </div>`;
+      return `<div class="score-chip"><span class="score-critic">${label}</span><span class="score-value ${cls}">${score}</span></div>`;
     }).join('');
   }
 
-  function renderStarsHtml(n) {
-    const filled   = '★'.repeat(n);
-    const unfilled = '☆'.repeat(Math.max(0, 4 - n));
-    const cls = n === 4 ? 'star-filled-4' : n === 3 ? 'star-filled-3' : n === 2 ? 'star-filled-2' : 'star-filled-1';
-    const badgeTxt = n === 4 ? '★★★★ 4 Stars' : n === 3 ? '★★★ 3 Stars' : n === 2 ? '★★ 2 Stars' : '★ 1 Star';
-    return { stars: filled + unfilled, cls, badge: badgeTxt };
-  }
-
   // ── MODAL ─────────────────────────────────────
-  function openModal(wine) {
-    const vintage = getActiveVintage(wine);
-    modalContent.innerHTML = buildModalHtml(wine, vintage);
+  function openModal(domaine) {
+    modalContent.innerHTML = buildModalHtml(domaine);
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
-
-    // Vintage tab listeners
-    modalContent.querySelectorAll('.vintage-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        activeVintages[wine.id] = Number(tab.dataset.year);
-        const newVintage = getActiveVintage(wine);
-        const reviewsEl = modalContent.querySelector('.critics-reviews');
-        const rvfEl     = modalContent.querySelector('.rvf-score-display');
-        reviewsEl.innerHTML = buildCriticReviews(newVintage);
-        rvfEl.innerHTML     = `<span>RVF 점수</span><strong>${newVintage.rvf_score}/20</strong>`;
-        modalContent.querySelectorAll('.vintage-tab').forEach(t => t.classList.toggle('active', Number(t.dataset.year) === newVintage.year));
-      });
-    });
+    bindModalWineAccordions(domaine);
   }
 
-  function buildModalHtml(wine, vintage) {
-    const starsHtml = renderStarsHtml(wine.rvf_stars);
-    const vintageTabsHtml = wine.vintages
-      .sort((a, b) => b.year - a.year)
-      .map(v => `<button class="vintage-tab ${v.year === vintage.year ? 'active' : ''}" data-year="${v.year}">${v.year}</button>`)
-      .join('');
+  function buildModalHtml(domaine) {
+    const starsHtml = renderStarsHtml(domaine.rvf_stars);
+
+    const winesHtml = domaine.wines.map(wine => buildWineAccordion(wine, domaine)).join('');
 
     return `
       <div class="modal-header">
         <div class="modal-badge-row">
-          <span class="modal-appellation">${wine.appellation}</span>
-          <span class="meta-tag type-${wine.type.toLowerCase()}">${wine.type}</span>
+          <span class="modal-appellation">${domaine.region} · ${domaine.village}</span>
+          ${domaine.type_tags.map(t => `<span class="meta-tag type-${t.toLowerCase()}">${t}</span>`).join('')}
         </div>
-        <div class="modal-name">${wine.name}</div>
-        <div class="modal-domaine">${wine.domaine} · ${wine.region}</div>
+        <div class="modal-name">${domaine.name}</div>
         <div class="modal-rvf-stars ${starsHtml.cls}">${starsHtml.stars}</div>
-        <div class="modal-description">${wine.description}</div>
+        <div class="modal-description">${domaine.description}</div>
       </div>
       <div class="modal-body">
-        <h3 class="modal-section-title">빈티지 선택</h3>
-        <div class="vintage-tabs">${vintageTabsHtml}</div>
+        <h3 class="modal-section-title">수록 와인 (${domaine.wines.length}종)</h3>
+        <div class="wine-accordion-list">${winesHtml}</div>
+      </div>`;
+  }
 
-        <div class="rvf-score-display">
-          <span>RVF 점수</span>
-          <strong>${vintage.rvf_score}/20</strong>
+  function buildWineAccordion(wine, domaine) {
+    const latestVintage = [...wine.vintages].sort((a, b) => b.year - a.year)[0];
+    const typeClass = `type-${wine.type.toLowerCase()}`;
+    const imgHtml = wine.image
+      ? `<img src="${wine.image}" alt="${wine.name}" class="wine-acc-img" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+         <div class="wine-acc-img-placeholder" style="display:none"><span>🍷</span></div>`
+      : `<div class="wine-acc-img-placeholder"><span>${wine.type === 'Blanc' ? '🥂' : wine.type === 'Effervescent' ? '🍾' : '🍷'}</span></div>`;
+
+    return `
+      <div class="wine-accordion" data-wine-id="${wine.id}">
+        <div class="wine-acc-header">
+          <div class="wine-acc-img-wrap">${imgHtml}</div>
+          <div class="wine-acc-info">
+            <div class="wine-acc-appellation">${wine.appellation}</div>
+            <div class="wine-acc-name">${wine.name}</div>
+            <div class="wine-acc-meta">
+              <span class="meta-tag ${typeClass}">${wine.type}</span>
+              <span class="meta-tag">최신 ${latestVintage.year}</span>
+              <span class="meta-tag">RVF ${latestVintage.rvf_score}/20</span>
+            </div>
+          </div>
+          <span class="wine-acc-arrow">▾</span>
         </div>
-
-        <h3 class="modal-section-title">평론가 평점 & 테이스팅 노트</h3>
-        <div class="critics-reviews">${buildCriticReviews(vintage)}</div>
+        <div class="wine-acc-body hidden">
+          <div class="vintage-tabs">
+            ${wine.vintages.sort((a,b)=>b.year-a.year).map(v =>
+              `<button class="vintage-tab ${v.year===latestVintage.year?'active':''}" data-year="${v.year}">${v.year}</button>`
+            ).join('')}
+          </div>
+          <div class="rvf-score-display">
+            <span>RVF 점수</span>
+            <strong>${latestVintage.rvf_score}/20</strong>
+          </div>
+          <div class="critics-reviews">${buildCriticReviews(latestVintage)}</div>
+        </div>
       </div>`;
   }
 
   function buildCriticReviews(vintage) {
     if (!vintage) return '';
-    const mapping = [
+    return [
       { key: 'parker',         info: CRITICS.parker },
       { key: 'wine_spectator', info: CRITICS.wine_spectator },
       { key: 'suckling',       info: CRITICS.suckling },
       { key: 'decanter',       info: CRITICS.decanter }
-    ];
-    return mapping.map(({ key, info }) => {
+    ].map(({ key, info }) => {
       const data = vintage.critics[key];
       if (!data) return '';
       const scoreClass = data.score >= 100 ? 'perfect' : data.score >= 97 ? 'excellent' : '';
@@ -287,6 +280,36 @@
     }).join('');
   }
 
+  // ── ACCORDION INTERACTIONS ────────────────────
+  function bindModalWineAccordions(domaine) {
+    modalContent.querySelectorAll('.wine-accordion').forEach(acc => {
+      const header = acc.querySelector('.wine-acc-header');
+      const body   = acc.querySelector('.wine-acc-body');
+      const arrow  = acc.querySelector('.wine-acc-arrow');
+      const wineId = acc.dataset.wineId;
+      const wine   = domaine.wines.find(w => w.id === wineId);
+
+      header.addEventListener('click', () => {
+        const isOpen = !body.classList.contains('hidden');
+        body.classList.toggle('hidden', isOpen);
+        arrow.textContent = isOpen ? '▾' : '▴';
+      });
+
+      // Vintage tab switching within accordion
+      acc.querySelectorAll('.vintage-tab').forEach(tab => {
+        tab.addEventListener('click', e => {
+          e.stopPropagation();
+          const year = Number(tab.dataset.year);
+          const vintage = wine.vintages.find(v => v.year === year);
+          if (!vintage) return;
+          acc.querySelectorAll('.vintage-tab').forEach(t => t.classList.toggle('active', t === tab));
+          acc.querySelector('.rvf-score-display').innerHTML = `<span>RVF 점수</span><strong>${vintage.rvf_score}/20</strong>`;
+          acc.querySelector('.critics-reviews').innerHTML = buildCriticReviews(vintage);
+        });
+      });
+    });
+  }
+
   // ── CLOSE MODAL ───────────────────────────────
   function closeModal() {
     modal.classList.add('hidden');
@@ -298,7 +321,10 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
   // ── OPEN MODAL FROM MAP ───────────────────────
-  document.addEventListener('_openModal', e => { openModal(e.detail); });
+  document.addEventListener('_openModal', e => {
+    const domaine = DOMAINES_DATA.find(d => d.id === e.detail);
+    if (domaine) openModal(domaine);
+  });
 
   // ── CRITICS SECTION ───────────────────────────
   function renderCritics() {
@@ -312,51 +338,49 @@
       </div>`).join('');
   }
 
+  // ── STARS HTML ────────────────────────────────
+  function renderStarsHtml(n) {
+    const filled   = '★'.repeat(n);
+    const unfilled = '☆'.repeat(Math.max(0, 4 - n));
+    const cls = n === 4 ? 'star-filled-4' : n === 3 ? 'star-filled-3' : n === 2 ? 'star-filled-2' : 'star-filled-1';
+    const badgeTxt = n === 4 ? '★★★★ 4 Stars' : n === 3 ? '★★★ 3 Stars' : n === 2 ? '★★ 2 Stars' : '★ 1 Star';
+    return { stars: filled + unfilled, cls, badge: badgeTxt };
+  }
+
+  // expose for map.js
+  window._renderStarsHtml = renderStarsHtml;
+  window._openDomaineModal = (id) => {
+    const d = DOMAINES_DATA.find(x => x.id === id);
+    if (d) openModal(d);
+  };
+
   // ── BIND EVENTS ───────────────────────────────
   function bindEvents() {
-    // Search input
     searchInput.addEventListener('input', debounce(e => {
       currentSearch = e.target.value;
-      renderWines();
+      renderDomaines();
     }, 200));
 
-    // Clear
     clearBtn.addEventListener('click', () => {
       searchInput.value = '';
       currentSearch = '';
-      renderWines();
+      renderDomaines();
       searchInput.focus();
     });
 
-    // Star filter buttons
     document.querySelectorAll('.star-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentStarFilter = btn.dataset.stars;
-        renderWines();
+        renderDomaines();
       });
     });
 
-    // Region filter
-    regionFilter.addEventListener('change', e => {
-      currentRegion = e.target.value;
-      renderWines();
-    });
+    regionFilter.addEventListener('change', e => { currentRegion = e.target.value; renderDomaines(); });
+    typeFilter.addEventListener('change',   e => { currentType   = e.target.value; renderDomaines(); });
+    sortFilter.addEventListener('change',   e => { currentSort   = e.target.value; renderDomaines(); });
 
-    // Type filter
-    typeFilter.addEventListener('change', e => {
-      currentType = e.target.value;
-      renderWines();
-    });
-
-    // Sort
-    sortFilter.addEventListener('change', e => {
-      currentSort = e.target.value;
-      renderWines();
-    });
-
-    // View toggle
     gridViewBtn.addEventListener('click', () => {
       isListView = false;
       wineGrid.classList.remove('list-view');
@@ -371,16 +395,11 @@
     });
   }
 
-  // ── UTILS ─────────────────────────────────────
   function debounce(fn, delay) {
     let timer;
-    return function (...args) {
-      clearTimeout(timer);
-      timer = setTimeout(() => fn.apply(this, args), delay);
-    };
+    return function (...args) { clearTimeout(timer); timer = setTimeout(() => fn.apply(this, args), delay); };
   }
 
-  // ── START ─────────────────────────────────────
   init();
 
 })();
