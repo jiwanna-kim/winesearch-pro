@@ -16,13 +16,14 @@ const DOMAINES_DATA = [
     type_tags: ["Blanc"],
     description: "장 프랑수아 코슈-뒤리가 평생을 바쳐 일군 뫼르소의 전설. 전 세계에서 가장 구하기 어려운 화이트 와인 생산자 중 하나로, 그의 포도밭은 단 10헥타르에 불과하지만 각 퀴베는 최상의 평가를 받는다. 섬세한 양조로 테루아를 최대한 표현하며, 특히 페리에르는 세계 최고의 샤르도네 중 하나로 꼽힌다.",
     coords: { lat: 46.9760, lng: 4.8310, place: "Meursault" },
+    hero_image: "https://commons.wikimedia.org/wiki/Special:FilePath/Meursault-Le_Village.JPG",
     wines: [
       {
         id: "w1",
         name: "Meursault Perrières",
         appellation: "Meursault 1er Cru Perrières",
         type: "Blanc",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Meursault-Perrieres_Coche-Dury.jpg/300px-Meursault-Perrieres_Coche-Dury.jpg",
+        image: null,
         vintages: [
           { year: 2020, rvf_score: 20, critics: {
             parker: { score: 100, note: "The greatest white Burgundy made this decade. An almost impossible balance of richness, mineral precision and extraordinary length." },
@@ -65,6 +66,7 @@ const DOMAINES_DATA = [
     type_tags: ["Blanc", "Rouge"],
     description: "도미니크 라폰이 이끄는 뫼르소의 최상위 도멘. 화이트 부르고뉴에서 코슈-뒤리와 함께 뫼르소의 양대 산맥으로 꼽힌다. 비오다이나미 농법으로 전환한 이후 품질이 한층 높아졌으며, 특히 뫼르소 페리에르와 몽라셰 그랑 크뤼는 전 세계 수집가들이 탐내는 와인이다.",
     coords: { lat: 46.9762, lng: 4.8315, place: "Meursault" },
+    hero_image: "https://commons.wikimedia.org/wiki/Special:FilePath/Meursault-Le_Village.JPG",
     wines: [
       {
         id: "w3",
@@ -108,6 +110,7 @@ const DOMAINES_DATA = [
     type_tags: ["Blanc"],
     description: "배우이기도 했던 장 마크 룰로가 운영하는 뫼르소의 전설적 도멘. 무게감보다 순수성과 테루아 표현에 집중하는 스타일로, 그의 와인들은 뫼르소의 섬세한 미네랄과 우아함을 가장 잘 표현한다는 평가를 받는다. 연간 생산량이 극히 적어 세계적으로 희소성이 매우 높다.",
     coords: { lat: 46.9758, lng: 4.8318, place: "Meursault" },
+    hero_image: "https://commons.wikimedia.org/wiki/Special:FilePath/Meursault-Le_Village.JPG",
     wines: [
       {
         id: "w5",
@@ -151,6 +154,7 @@ const DOMAINES_DATA = [
     type_tags: ["Blanc"],
     description: "뱅상 다비사는 도멘 라보노와 함께 샤블리 최고의 생산자로 꼽힌다. 자연 효모, 오크통 발효, 최소한의 개입이라는 전통 방식을 고수하며 각 그랑 크뤼 포도밭의 개성을 극명하게 표현한다. 키모노이트 석회암 특유의 굴 껍데기, 백악, 레몬 향이 돋보이는 샤블리의 정수.",
     coords: { lat: 47.8132, lng: 3.8000, place: "Chablis" },
+    hero_image: "https://commons.wikimedia.org/wiki/Special:FilePath/Chablis_Grand_Cru_Vineyard.jpg",
     wines: [
       {
         id: "w7",
@@ -194,6 +198,7 @@ const DOMAINES_DATA = [
     type_tags: ["Rouge", "Blanc"],
     description: "위베르 드 몽티유가 설립하고 지금은 아들 에티엔이 이끄는 볼네의 최고 도멘. 우아함과 정밀성을 최우선으로 여기며 알코올이 낮고 타닌이 섬세한 스타일로 유명하다. 볼네와 뽀마르의 여러 1등급 포도밭을 보유하며, 비오다이나미 농법으로 테루아의 표현을 극대화한다.",
     coords: { lat: 46.9985, lng: 4.8140, place: "Volnay" },
+    hero_image: "https://commons.wikimedia.org/wiki/Special:FilePath/Volnay_Cote-d%27or.jpg",
     wines: [
       {
         id: "w9",
@@ -237,6 +242,7 @@ const DOMAINES_DATA = [
     type_tags: ["Effervescent"],
     description: "프란시스 에글리가 이끄는 앙보네 그랑 크뤼의 전설적 레콜탕 마니퓔랑. 오래된 피노 누아 고목(vieilles vignes)에서 최소한의 개입으로 만드는 그의 샹파뉴는 구조감, 복잡성, 깊이에 있어 대형 메종을 능가한다. 소규모 생산으로 전 세계 수집가들이 탐내는 샹파뉴.",
     coords: { lat: 49.0530, lng: 4.1450, place: "Ambonnay, Champagne" },
+    hero_image: "https://commons.wikimedia.org/wiki/Special:FilePath/Ambonnay_village.jpg",
     wines: [
       {
         id: "w11",
@@ -280,6 +286,7 @@ const DOMAINES_DATA = [
     type_tags: ["Blanc"],
     description: "베르나르 라보노와 그의 아들들이 운영하는 샤블리의 성배. 다비사와 함께 샤블리의 절대적 기준점으로, 전통적 오크통 숙성으로 만들어지는 그의 그랑 크뤼들은 키모노이트 테루아의 순수한 표현이다. 연간 생산량이 극히 적어 구매가 매우 어렵고, 노령화로 인해 은퇴 이후의 미래가 불확실한 귀중한 도멘.",
     coords: { lat: 47.8129, lng: 3.7996, place: "Chablis" },
+    hero_image: "https://commons.wikimedia.org/wiki/Special:FilePath/Chablis_Grand_Cru_Vineyard.jpg",
     wines: [
       {
         id: "w13",
@@ -319,19 +326,20 @@ const DOMAINES_DATA = [
   {
     id: 8,
     name: "Domaine de la Romanée-Conti",
-    rvf_stars: 3,
+    rvf_stars: 4,
     region: "Bourgogne",
     village: "Vosne-Romanée",
     type_tags: ["Rouge", "Blanc"],
-    description: "세계 와인의 정점. 부르고뉴 코트 드 뉘 최고의 포도밭을 독점 소유하는 전설적 도멘. 모든 와인이 그랑 크뤼이며, 로마네-콩티(1.8ha)는 세계에서 가장 비싼 와인으로 꼽힌다. 비오다이나미 농법과 마승(馬耕), 손수확을 고집하며 피노 누아의 궁극을 표현한다.",
+    description: "세계 와인의 절대적 정점. RVF 2023 최초 4스타 선정 도멘 중 하나. 부르고뉴 코트 드 뉘 최고의 포도밭을 독점 소유하는 전설적 도멘으로, 모든 와인이 그랑 크뤼이다. 로마네-콩티(1.8ha)는 세계에서 가장 비싸고 희소한 와인으로 꼽힌다. 비오다이나미 농법과 마승(馬耕), 손수확을 고집하며 피노 누아의 궁극을 표현한다.",
     coords: { lat: 47.1574, lng: 4.9529, place: "Vosne-Romanée" },
+    hero_image: "https://commons.wikimedia.org/wiki/Special:FilePath/Vigne_Roman%C3%A9e-Conti_001.JPG",
     wines: [
       {
         id: "w15",
         name: "Romanée-Conti",
         appellation: "Romanée-Conti Grand Cru",
         type: "Rouge",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Romanee-Conti_2012.jpg/300px-Romanee-Conti_2012.jpg",
+        image: null,
         vintages: [
           { year: 2018, rvf_score: 20, critics: {
             parker: { score: 100, note: "The 2018 Romanée-Conti is breathtaking. Layers of red and black fruits, violets, spice, and forest floor with extraordinary depth and precision. A wine for the ages." },
@@ -389,11 +397,11 @@ const DOMAINES_DATA = [
   {
     id: 9,
     name: "Pétrus",
-    rvf_stars: 3,
+    rvf_stars: 4,
     region: "Bordeaux",
     village: "Pomerol",
     type_tags: ["Rouge"],
-    description: "포므롤의 왕. 뽀므롤의 특별한 청색 점토(blue clay) 11.5헥타르에서 100% 메를로로 만들어지는 세계에서 가장 비싼 와인 중 하나. 헬리콥터로 포도밭에 공기를 불어넣어 수분을 제거하는 등 완벽에 가까운 양조로 유명하다. 크리스티앙 무에 가문이 소유.",
+    description: "포므롤의 왕. RVF 2023 최초 4스타 선정 보르도 도멘 중 하나. 뽀므롤의 특별한 청색 점토(blue clay) 11.5헥타르에서 100% 메를로로 만들어지는 세계에서 가장 비싼 와인 중 하나. 헬리콥터로 포도밭에 공기를 불어넣어 수분을 제거하는 등 완벽에 가까운 양조로 유명하다. 크리스티앙 무에 가문이 소유.",
     coords: { lat: 44.9208, lng: -0.1836, place: "Pomerol" },
     wines: [
       {
@@ -762,11 +770,11 @@ const DOMAINES_DATA = [
   {
     id: 20,
     name: "Domaine Leroy",
-    rvf_stars: 2,
+    rvf_stars: 4,
     region: "Bourgogne",
     village: "Vosne-Romanée",
     type_tags: ["Rouge"],
-    description: "랄루 비즈-르로아가 DRC를 떠나 설립한 비오다이나미 도멘. 헥타르당 수확량을 극도로 제한하고 자연 이외에 어떤 것도 사용하지 않는 극단적 자연주의 양조로 가격이 천문학적이다. 뮈지니, 샹베르탱, 로마네 생 비방 등 최고의 그랑 크뤼를 보유.",
+    description: "랄루 비즈-르로아가 DRC를 떠나 설립한 비오다이나미 도멘. RVF 2023 최초 4스타 선정. 헥타르당 수확량을 극도로 제한하고 자연 이외에 어떤 것도 사용하지 않는 극단적 자연주의 양조로 가격이 천문학적이다. 뮈지니, 샹베르탱, 로마네 생 비방 등 최고의 그랑 크뤼를 보유하며, 비오다이나미 농법의 극단적 실천으로 부르고뉴 최고가 와인 중 하나로 꼽힌다.",
     coords: { lat: 47.1970, lng: 4.9635, place: "Vosne-Romanée" },
     wines: [
       {
@@ -790,11 +798,11 @@ const DOMAINES_DATA = [
   {
     id: 21,
     name: "Château Cheval Blanc",
-    rvf_stars: 2,
+    rvf_stars: 4,
     region: "Bordeaux",
     village: "Saint-Émilion",
     type_tags: ["Rouge"],
-    description: "생테밀리옹 최고 등급(Premier Grand Cru Classé A) 샤토. 카베르네 프랑을 주품종으로 사용하는 독특한 블렌딩으로 보르도에서 가장 우아하고 향기로운 레드 와인을 만든다. LVMH 그룹이 소유하며, 양조가 피에르 올리비에 클로에의 지휘 아래 지속적으로 품질을 높이고 있다.",
+    description: "생테밀리옹 최고 등급(Premier Grand Cru Classé A) 샤토. RVF 2023 최초 4스타 선정 보르도 도멘. 카베르네 프랑을 주품종으로 사용하는 독특한 블렌딩으로 보르도에서 가장 우아하고 향기로운 레드 와인을 만든다. LVMH 그룹이 소유하며, 양조가 피에르 올리비에 클로에의 지휘 아래 지속적으로 품질을 높이고 있다.",
     coords: { lat: 44.8950, lng: -0.1570, place: "Saint-Émilion" },
     wines: [
       {
@@ -824,11 +832,11 @@ const DOMAINES_DATA = [
   {
     id: 22,
     name: "Château Léoville Las Cases",
-    rvf_stars: 2,
+    rvf_stars: 4,
     region: "Bordeaux",
     village: "Saint-Julien",
     type_tags: ["Rouge"],
-    description: "상쥘리앙의 슈퍼 세컨드. 그랑 앙클로라 불리는 석벽으로 둘러싸인 최고의 블록에서 생산되는 이 와인은 2등급 중 가장 1등급에 가깝다는 평가를 받는다. 장 위베르 드류는 품질에 대한 극단적 집착으로 유명하며, 특히 좋지 않은 빈티지에는 그랑 뱅 비율을 대폭 줄인다.",
+    description: "상쥘리앙의 슈퍼 세컨드. RVF 2023 최초 4스타 선정 보르도 도멘. 그랑 앙클로라 불리는 석벽으로 둘러싸인 최고의 블록에서 생산되는 이 와인은 2등급 중 가장 1등급에 가깝다는 평가를 받는다. 장 위베르 드류는 품질에 대한 극단적 집착으로 유명하며, 특히 좋지 않은 빈티지에는 그랑 뱅 비율을 대폭 줄인다.",
     coords: { lat: 45.1664, lng: -0.7407, place: "Saint-Julien" },
     wines: [
       {

@@ -130,17 +130,21 @@
       `<span class="meta-tag type-${t.toLowerCase()}">${t}</span>`
     ).join('');
 
-    // Pick a representative image from first wine that has one
-    const heroImg = domaine.wines.find(w => w.image)?.image || null;
+    // Use domaine hero_image first, then fall back to first wine image
+    const heroImg = domaine.hero_image || domaine.wines.find(w => w.image)?.image || null;
 
     const scorePreview = getTopScorePreview(domaine);
 
     card.innerHTML = `
       <div class="card-star-badge ${badgeClass}">${starsHtml.badge}</div>
       ${heroImg
-        ? `<div class="card-hero-img"><img src="${heroImg}" alt="${domaine.wines[0]?.name}" loading="lazy" onerror="this.parentElement.classList.add('img-error')"/></div>`
+        ? `<div class="card-hero-img"><img src="${heroImg}" alt="${domaine.name}" loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+             <div class="card-hero-placeholder bar-${(domaine.type_tags[0] || 'rouge').toLowerCase().replace(/\s/g,'-')}" style="display:none">
+               <span class="placeholder-icon">${domaine.type_tags[0]==='Blanc'?'🥂':domaine.type_tags[0]==='Effervescent'?'🍾':'🍷'}</span>
+             </div></div>`
         : `<div class="card-hero-placeholder bar-${(domaine.type_tags[0] || 'rouge').toLowerCase().replace(/\s/g,'-')}">
-             <span class="placeholder-icon">🍷</span>
+             <span class="placeholder-icon">${domaine.type_tags[0]==='Blanc'?'🥂':domaine.type_tags[0]==='Effervescent'?'🍾':'🍷'}</span>
            </div>`
       }
       <div class="card-body">
